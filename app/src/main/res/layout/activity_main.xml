@@ -30,7 +30,7 @@
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
         android:layout_marginTop="52dp"
-        android:background="@drawable/music_no_found"
+        android:background="@drawable/"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
