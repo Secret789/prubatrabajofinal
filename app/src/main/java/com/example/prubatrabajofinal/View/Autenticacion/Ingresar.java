@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.prubatrabajofinal.MainActivity;
 import com.example.prubatrabajofinal.R;
@@ -24,6 +25,8 @@ public class Ingresar extends AppCompatActivity {
         Button btn1 = (Button) findViewById(R.id.button4);
         Button btn2 = (Button) findViewById(R.id.button5);
 
+        TextView txtclick = findViewById(R.id.textView11);
+
         btn1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,6 +39,15 @@ public class Ingresar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setPreferences();
+            }
+
+        });
+
+        txtclick.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (v.getContext(), Registrarse.class);
+                startActivityForResult(intent, 0);
             }
 
         });

@@ -1,13 +1,18 @@
 package com.example.prubatrabajofinal.View.Reproductor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.prubatrabajofinal.Model.Reproductor.Musica;
 import com.example.prubatrabajofinal.R;
 
-public class Reproductor extends AppCompatActivity {
+public class Reproductor extends Fragment {
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
 
@@ -31,15 +36,16 @@ public class Reproductor extends AppCompatActivity {
             new Musica("Nombre de cancion 17","Autor 17","00:05:23")
     };
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reproductor);
-
-        mRecyclerView = findViewById(R.id.recyclerView);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.activity_reproductor, container, false);
+        mRecyclerView = v.findViewById(R.id.recyclerView);
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new MyAdapter(myDataSet);
         mRecyclerView.setAdapter(mAdapter);
+
+        // Inflate the layout for this fragment
+        return v;
     }
 }

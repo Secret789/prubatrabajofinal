@@ -6,97 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Tiempo"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00:00"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="151dp"
-        android:layout_height="85dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/textb"
+        android:id="@+id/constraint_fragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/constraintLayout1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reproductor"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0.0"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/constraintLayout1"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout1"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout1"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Distancia (Km)"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout1"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout1"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout1" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemBackground="@color/backnavbar"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
         tools:ignore="PrivateResource">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout1"
-        android:layout_width="151dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="100dp"
-        android:background="@drawable/textb"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
