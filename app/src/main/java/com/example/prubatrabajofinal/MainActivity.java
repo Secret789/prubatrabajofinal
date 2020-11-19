@@ -2,12 +2,15 @@ package com.example.prubatrabajofinal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.prubatrabajofinal.View.Autenticacion.Ingresar;
 import com.example.prubatrabajofinal.View.Reproductor.Reproductor;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,8 +20,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btn = (Button) findViewById(R.id.button);
-        Intent intent = new Intent (this, Reproductor.class);
-        startActivityForResult(intent, 0);
+
+        SharedPreferences preferences=getSharedPreferences("preferencesfile", Context.MODE_PRIVATE);
+        Boolean FirsTime=preferences.getBoolean("FirstTime", true);
+
+        if(FirsTime) {
+            Intent intent = new Intent(this, Ingresar.class);
+            startActivityForResult(intent, 0);
+        }
+
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
