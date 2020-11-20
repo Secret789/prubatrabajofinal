@@ -9,11 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
-import com.example.prubatrabajofinal.Model.Reproductor.Musica;
 import com.example.prubatrabajofinal.View.Autenticacion.Ingresar;
 import com.example.prubatrabajofinal.View.Entrenamiento.Entrenamiento;
 import com.example.prubatrabajofinal.View.Reproductor.Reproductor;
