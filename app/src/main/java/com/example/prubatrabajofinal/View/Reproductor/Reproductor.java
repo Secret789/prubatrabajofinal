@@ -86,12 +86,6 @@ public class Reproductor extends Fragment implements IReproductorView{
                 before(v);
             }
         });
-        mRecyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(),"Posicion: ",Toast.LENGTH_SHORT).show();
-            }
-        });
         // Inflate the layout for this fragment
         return v;
     }
@@ -214,13 +208,13 @@ public class Reproductor extends Fragment implements IReproductorView{
             Toast.makeText(v.getContext(),"No existen mas canciones",Toast.LENGTH_SHORT).show();
         }
     }
-
+    
     public void checkPermission(View v){
         int hasWriteContactsPermission = checkSelfPermission(this.getContext(),Manifest.permission.READ_EXTERNAL_STORAGE);
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
         }else if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(v.getContext(), "The permissions are already granted ", Toast.LENGTH_LONG).show();
+            Toast.makeText(v.getContext(), "Ya se han concedido permisos", Toast.LENGTH_LONG).show();
             listMusic = reproductorPresenter.obtenerArchivosmp3(v);
             llenarArrayMusic(v);
         }

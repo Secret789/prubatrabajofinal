@@ -29,6 +29,7 @@ public class ReproductorPresenterCompl implements IReproductorPresenter{
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String[] projection = {MediaStore.Audio.AudioColumns.DATA, MediaStore.Audio.AudioColumns.TITLE, MediaStore.Audio.AudioColumns.DURATION, MediaStore.Audio.ArtistColumns.ARTIST,};
         Cursor c = v.getContext().getContentResolver().query(uri, projection, null, null, null);
+        //Cursor c = v.getContext().getContentResolver().query(uri, projection, MediaStore.Audio.Media.DATA + " like ? ", new String[]{"%Samsung/Music%"}, null);
             if (c != null) {
             while (c.moveToNext()) {
                 MusicaModel musicaModel = new MusicaModel();
