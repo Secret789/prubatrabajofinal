@@ -8,14 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.prubatrabajofinal.R;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Usuario extends Fragment {
     public GraficaResumen graficaResumen;
+    Button button1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_usuario, container, false);
@@ -29,6 +40,14 @@ public class Usuario extends Fragment {
 
         float []weekStats={100,200,300,80,60,94,80};
         graficaResumen.initArray(weekStats,week);
+
+        button1=(Button)v.findViewById(R.id.button6);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InsertTrayectoria("https://vacillatory-grids.000webhostapp.com/runhealthy/insertar_trayectoria.php");
+            }
+        });
 
         return v;
     }
@@ -62,5 +81,31 @@ public class Usuario extends Fragment {
                 break;
         }
         return week;
+    }
+    public void InsertTrayectoria(String URL){
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> parametros =new HashMap<String, String>();
+                parametros.put("fecha","prueba");
+                parametros.put("horaini","prueba1");
+                parametros.put("horafin","prueba2");
+                parametros.put("usuario","11");
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
+        requestQueue.add(stringRequest);
+
     }
 }
