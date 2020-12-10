@@ -1,8 +1,13 @@
 package com.example.prubatrabajofinal.View.Usuario;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,16 +22,27 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.prubatrabajofinal.Model.Historial.TrayectoriaModel;
+import com.example.prubatrabajofinal.Model.Reproductor.MusicaModel;
 import com.example.prubatrabajofinal.R;
+import com.example.prubatrabajofinal.View.Reproductor.MyAdapter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class Usuario extends Fragment {
     public GraficaResumen graficaResumen;
     Button button1;
+    private RecyclerView mRecyclerView;
+    private MyAdapterTrayectoria mAdapter;
+    private static List<TrayectoriaModel> listTrayectoria;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_usuario, container, false);
@@ -34,11 +50,22 @@ public class Usuario extends Fragment {
         //activity objects
         graficaResumen=(GraficaResumen) v.findViewById(R.id.ResumenView);
 
+        mRecyclerView = v.findViewById(R.id.recyclerView2);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        llenarArray();
+        mAdapter = new MyAdapterTrayectoria(listTrayectoria,this.getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRecyclerView.setClipToOutline(true);
+        }
+
         //dando valores al array de la grafica
         //String[]week={"lun","mar","mie","jue","vie","sab","dom"};
         String[]week=getArrayWeek();
 
-        float []weekStats={100,200,300,80,60,94,80};
+        float []weekStats={100,200,300,80,0,94,80};
         graficaResumen.initArray(weekStats,week);
 
         button1=(Button)v.findViewById(R.id.button6);
@@ -51,6 +78,13 @@ public class Usuario extends Fragment {
 
         return v;
     }
+    public void llenarArray(){
+        listTrayectoria=new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            listTrayectoria.add(new TrayectoriaModel(10,"10/10/10","01:20:30","01:40:30","00:12:30"));
+        }
+    }
+
     public String [] getArrayWeek(){
         String[]week=new String[7];
         Date fecha =new Date();
@@ -82,6 +116,8 @@ public class Usuario extends Fragment {
         }
         return week;
     }
+
+
     public void InsertTrayectoria(String URL){
         StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override

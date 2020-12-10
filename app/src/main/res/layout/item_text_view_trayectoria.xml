@@ -10,54 +10,53 @@
     android:paddingRight="16dp"
     android:paddingBottom="10dp">
 
-    <ImageView
-        android:id="@+id/iv_avatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp" />
+    <TextView
+        android:id="@+id/tv_ini"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:text="Compañía"
+        tools:text="Inicio: 10:20" />
 
     <TextView
         android:id="@+id/tv_fecha"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="152dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="152dp"
+        android:layout_marginRight="250dp"
         android:layout_toStartOf="@+id/tv_fin"
         android:layout_toLeftOf="@+id/tv_fin"
-        android:layout_toEndOf="@+id/iv_avatar"
-        android:layout_toRightOf="@+id/iv_avatar"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Nombre"
         android:textAppearance="?attr/textAppearanceListItem"
-        tools:text="Alexander Pierrot" />
+        tools:text="Fecha: 30/06/30" />
 
     <TextView
         android:id="@+id/tv_dura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_fecha"
-        android:layout_marginStart="16dp"
 
-        android:layout_marginLeft="152dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="248dp"
+        android:layout_marginRight="250dp"
         android:layout_toStartOf="@+id/tv_fin"
         android:layout_toLeftOf="@+id/tv_fin"
-        android:layout_toEndOf="@+id/iv_avatar"
-        android:layout_toRightOf="@+id/iv_avatar"
-        android:text="Cargo"
         android:ellipsize="end"
         android:maxLines="1"
-        tools:text="CEO" />
+        android:text="Cargo"
+        tools:text="Duración: 00:30:00" />
 
     <TextView
         android:id="@+id/tv_fin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_ini"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="0dp"
         android:text="Compañía"
-        tools:text="Tiempo" />
+        tools:text="Fin: 10:50" />
 </RelativeLayout>

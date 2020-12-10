@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,6 @@ public class Reproductor extends Fragment implements IReproductorView{
     public static int position = 0;
     private MediaPlayer[] myDataSet;
     private static MediaPlayer currentMusic;
-
-
     private IReproductorPresenter reproductorPresenter;
     Button btplay, btnext, btbefore;
     ImageView ivPortada;
@@ -110,7 +109,6 @@ public class Reproductor extends Fragment implements IReproductorView{
             mIcon.mutate().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
             btplay.setBackground(mIcon);
             Toast.makeText(v.getContext(),"Pausa",Toast.LENGTH_SHORT).show();
-
         }else{
             currentMusic.start();
             Drawable mIcon= ContextCompat.getDrawable(getActivity(), R.drawable.pausa);
@@ -118,9 +116,7 @@ public class Reproductor extends Fragment implements IReproductorView{
             btplay.setBackground(mIcon);
             Toast.makeText(v.getContext(),"Empieza",Toast.LENGTH_SHORT).show();
         }
-
     }
-
     public void stop(View v){
         if(myDataSet[position]!=null){
             myDataSet[position].stop();
@@ -140,7 +136,9 @@ public class Reproductor extends Fragment implements IReproductorView{
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new MyAdapter(listMusic,this.getContext());
         mRecyclerView.setAdapter(mAdapter);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRecyclerView.setClipToOutline(true);
+        }
         updateReproductor();
         changeCurrentMusic();
     }
@@ -155,7 +153,6 @@ public class Reproductor extends Fragment implements IReproductorView{
         }
 
     }
-
     public static void updateReproductor(){
         tvNombre.setText(listMusic.get(position).nombre);
         tvDuracion.setText(listMusic.get(position).duracion);
@@ -177,7 +174,6 @@ public class Reproductor extends Fragment implements IReproductorView{
             Toast.makeText(v.getContext(),"No existen mas canciones",Toast.LENGTH_SHORT).show();
         }
     }
-
     public static void selected(){
 
         if(currentMusic.isPlaying()){
@@ -189,7 +185,6 @@ public class Reproductor extends Fragment implements IReproductorView{
             updateReproductor();
             changeCurrentMusic();
         }
-
     }
     public void before(View v){
         if(position>=1){
@@ -208,12 +203,11 @@ public class Reproductor extends Fragment implements IReproductorView{
             Toast.makeText(v.getContext(),"No existen mas canciones",Toast.LENGTH_SHORT).show();
         }
     }
-    
     public void checkPermission(View v){
         int hasWriteContactsPermission = checkSelfPermission(this.getContext(),Manifest.permission.READ_EXTERNAL_STORAGE);
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
-        }else if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED) {
+        }else {
             Toast.makeText(v.getContext(), "Ya se han concedido permisos", Toast.LENGTH_LONG).show();
             listMusic = reproductorPresenter.obtenerArchivosmp3(v);
             llenarArrayMusic(v);

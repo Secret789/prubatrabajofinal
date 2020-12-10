@@ -1,5 +1,4 @@
 package com.example.prubatrabajofinal.View.Reproductor;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.prubatrabajofinal.Model.Reproductor.MusicaModel;
 import com.example.prubatrabajofinal.R;
@@ -64,11 +62,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.itemView.setSelected(selected_position == position);
         holder.itemView.setBackgroundColor(selected_position == position ? context.getResources().getColor(R.color.colorPrimaryLight) : Color.TRANSPARENT);
 
-        TextView n= holder.textView.findViewById(R.id.tv_name);
+        TextView n= holder.textView.findViewById(R.id.tv_fecha);
         n.setText(mDataSet.get(position).nombre);
-        TextView n1= holder.textView.findViewById(R.id.tv_title);
+        TextView n1= holder.textView.findViewById(R.id.tv_dura);
         n1.setText(mDataSet.get(position).autor);
-        TextView n2= holder.textView.findViewById(R.id.tv_company);
+        TextView n2= holder.textView.findViewById(R.id.tv_fin);
         n2.setText(mDataSet.get(position).duracion);
         ImageView image = holder.textView.findViewById(R.id.iv_avatar);
         image.setImageResource(R.drawable.music_no_found);

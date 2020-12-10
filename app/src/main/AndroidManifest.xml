@@ -39,6 +39,7 @@
         <activity android:name=".View.Entrenamiento.Entrenamiento" />
         <activity android:name=".View.Autenticacion.Registrarse" />
         <activity android:name=".View.Autenticacion.Ingresar" />
+        <activity android:name=".View.Historial.Historial" />
         <activity android:name=".View.Reproductor.Reproductor" />
         <activity android:name=".MainActivity">
             <intent-filter>

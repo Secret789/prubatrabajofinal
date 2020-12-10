@@ -17,11 +17,16 @@ public class Registrarse extends AppCompatActivity {
         setContentView(R.layout.activity_registrarse);
 
         spinner = (Spinner)findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Registrarse.this,
-                R.layout.spinner_item,paths);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Registrarse.this, R.layout.spinner_item,paths);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
     }
 }

@@ -116,12 +116,21 @@ public class GraficaResumen extends View {
 
             //canvas.drawLine(xData,START,xData,mHeight-FINISH,mDialPaint);
             weekStatsInTable[i]=computeXStat(weekStats[i],max);
-            canvas.drawText(Float.toString(weekStats[i]), xData, weekStatsInTable[i]+5, mTextPaint);
+            canvas.drawText(Float.toString(weekStats[i]), xData, weekStatsInTable[i]-5, mTextPaint);
+
+
+
+
+            mDialPaint.setColor(getResources().getColor(R.color.colorPrimaryLight));
+
+            canvas.drawRect(xData-40,weekStatsInTable[i],xData+40,mHeight-50,mDialPaint);
+            mDialPaint.setColor(Color.parseColor("#000000"));
             if(i>0){
                 float xDataPast = computeXForPosition(i-1, mWidth);
-                mDialPaint.setStrokeWidth(3);
-                mDialPaint.setColor(getResources().getColor(R.color.colorPrimary));
+                mDialPaint.setStrokeWidth(5);
+                mDialPaint.setColor(getResources().getColor(R.color.colorPrimaryDark));
                 canvas.drawLine(xDataPast,weekStatsInTable[i-1],xData,weekStatsInTable[i],mDialPaint);
+                mDialPaint.setStrokeWidth(3);
             }
         }
 
@@ -142,8 +151,8 @@ public class GraficaResumen extends View {
         return espacio+espacio*pos;
     }
     private float computeXStat(final float stat,float max) {
-        float size=mHeight-START-FINISH;
-        return mHeight-(stat*size/max);
+        float size=mHeight-START-FINISH-50;
+        return mHeight-50-(stat*size/max);
     }
     private float maxStat(float[]stats) {
         float max=stats[0];
