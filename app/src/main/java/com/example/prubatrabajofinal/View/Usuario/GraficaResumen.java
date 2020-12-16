@@ -116,7 +116,7 @@ public class GraficaResumen extends View {
 
             //canvas.drawLine(xData,START,xData,mHeight-FINISH,mDialPaint);
             weekStatsInTable[i]=computeXStat(weekStats[i],max);
-            canvas.drawText(Float.toString(weekStats[i]), xData, weekStatsInTable[i]-5, mTextPaint);
+            canvas.drawText(Integer.toString((int)weekStats[i]), xData, weekStatsInTable[i]-5, mTextPaint);
 
 
 
@@ -142,7 +142,7 @@ public class GraficaResumen extends View {
 
 
         canvas.rotate(-90, 36, mHeight/2);
-        canvas.drawText("Tiempo", 0, mHeight/2, mTextPaint);
+        canvas.drawText("Tiempo (min)", 0, mHeight/2, mTextPaint);
 
         mDialPaint.setColor(getResources().getColor(R.color.backnavbar));
     }

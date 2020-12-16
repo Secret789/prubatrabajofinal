@@ -78,7 +78,7 @@ public class MyAdapterTrayectoria extends RecyclerView.Adapter<MyAdapterTrayecto
         TextView n= holder.textView.findViewById(R.id.tv_fecha);
         n.setText("Fecha: "+mDataSet.get(position).traFec);
         TextView n1= holder.textView.findViewById(R.id.tv_dura);
-        n1.setText("Duracion: "+mDataSet.get(position).traDur);
+        n1.setText("Duracion: "+mDataSet.get(position).traDur+" min");
         TextView n2= holder.textView.findViewById(R.id.tv_fin);
         n2.setText("Fin: "+mDataSet.get(position).traFin);
         TextView n3= holder.textView.findViewById(R.id.tv_ini);

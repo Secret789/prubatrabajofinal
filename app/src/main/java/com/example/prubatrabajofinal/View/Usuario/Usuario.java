@@ -24,9 +24,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prubatrabajofinal.Model.Historial.TrayectoriaModel;
 import com.example.prubatrabajofinal.Model.Reproductor.MusicaModel;
+import com.example.prubatrabajofinal.Presenter.Usuario.IUsuarioPresenter;
+import com.example.prubatrabajofinal.Presenter.Usuario.UsuarioPresenterCompl;
 import com.example.prubatrabajofinal.R;
 import com.example.prubatrabajofinal.View.Reproductor.MyAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -37,7 +40,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
-public class Usuario extends Fragment {
+public class Usuario extends Fragment implements IUsuarioView{
+    IUsuarioPresenter iUsuarioPresenter;
+
     public GraficaResumen graficaResumen;
     Button button1;
     private RecyclerView mRecyclerView;
@@ -50,11 +55,12 @@ public class Usuario extends Fragment {
         //activity objects
         graficaResumen=(GraficaResumen) v.findViewById(R.id.ResumenView);
 
+        iUsuarioPresenter=new UsuarioPresenterCompl(this,v);
         mRecyclerView = v.findViewById(R.id.recyclerView2);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        llenarArray();
+        llenarArray(v);
         mAdapter = new MyAdapterTrayectoria(listTrayectoria,this.getContext());
         mRecyclerView.setAdapter(mAdapter);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -65,26 +71,56 @@ public class Usuario extends Fragment {
         //String[]week={"lun","mar","mie","jue","vie","sab","dom"};
         String[]week=getArrayWeek();
 
-        float []weekStats={100,200,300,80,0,94,80};
+        float []weekStats={0,0,0,0,0,0,0};
         graficaResumen.initArray(weekStats,week);
 
         button1=(Button)v.findViewById(R.id.button6);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InsertTrayectoria("https://vacillatory-grids.000webhostapp.com/runhealthy/insertar_trayectoria.php");
+                InsertTrayectoria(getString(R.string.cloud_data)+"insertar_trayectoria.php");
             }
         });
 
         return v;
     }
-    public void llenarArray(){
-        listTrayectoria=new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            listTrayectoria.add(new TrayectoriaModel(10,"10/10/10","01:20:30","01:40:30","00:12:30"));
-        }
-    }
 
+    public void llenarArray(View v){
+        listTrayectoria=new ArrayList<>();
+        /*for (int i = 0; i < 20; i++) {
+            listTrayectoria.add(new TrayectoriaModel(10,"10/10/10","01:20:30","01:40:30","00:12:30"));
+        }*/
+        iUsuarioPresenter.ObtenerHistorial(11,getString(R.string.cloud_data)+"obtener_trayectoria.php");
+    }
+    public String sumarDias(Date fecha, int dias){
+        SimpleDateFormat formatFec = new SimpleDateFormat("dd/MM/yy");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_YEAR, dias);
+        return formatFec.format(calendar.getTime());
+    }
+    public float []getArrayStatsWeek(List<TrayectoriaModel> arr){
+        float[] arrayStats=new float[7];
+        Date now =new Date();
+        for(int i=0;i<arr.size();i++){
+            if(arr.get(i).traFec.equals(sumarDias(now,0))){
+                arrayStats[6]+=Integer.parseInt(arr.get(i).traDur);
+            } else if(arr.get(i).traFec.equals(sumarDias(now,-1))){
+                arrayStats[5]+=Integer.parseInt(arr.get(i).traDur);
+            } else if(arr.get(i).traFec.equals(sumarDias(now,-2))){
+                arrayStats[4]+=Integer.parseInt(arr.get(i).traDur);
+            } else if(arr.get(i).traFec.equals(sumarDias(now,-3))){
+                arrayStats[3]+=Integer.parseInt(arr.get(i).traDur);
+            } else if(arr.get(i).traFec.equals(sumarDias(now,-4))){
+                arrayStats[3]+=Integer.parseInt(arr.get(i).traDur);
+            } else if(arr.get(i).traFec.equals(sumarDias(now,-5))){
+                arrayStats[1]+=Integer.parseInt(arr.get(i).traDur);
+            } else if(arr.get(i).traFec.equals(sumarDias(now,-6))) {
+                arrayStats[0] += Integer.parseInt(arr.get(i).traDur);
+            }
+        }
+        return arrayStats;
+    }
     public String [] getArrayWeek(){
         String[]week=new String[7];
         Date fecha =new Date();
@@ -116,6 +152,22 @@ public class Usuario extends Fragment {
         }
         return week;
     }
+    public void updateRecicle(List<TrayectoriaModel> lista){
+        SimpleDateFormat formatFec = new SimpleDateFormat("dd/MM/yy");
+        Date now=new Date();
+
+
+        mAdapter.mDataSet=lista;
+        mAdapter.notifyDataSetChanged();
+        String[]week=getArrayWeek();
+        float[]weekStats=getArrayStatsWeek(lista);
+        graficaResumen.initArray(weekStats,week);
+        graficaResumen.invalidate();
+        graficaResumen.refreshDrawableState();
+
+
+        Toast.makeText(getContext(), "Se actualizo los datos ", Toast.LENGTH_SHORT).show();
+    }
 
 
     public void InsertTrayectoria(String URL){
@@ -133,9 +185,11 @@ public class Usuario extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> parametros =new HashMap<String, String>();
-                parametros.put("fecha","prueba");
-                parametros.put("horaini","prueba1");
-                parametros.put("horafin","prueba2");
+                SimpleDateFormat formatOri = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date now=new Date();
+                parametros.put("fecha",formatOri.format(now));
+                parametros.put("horaini",formatOri.format(now));
+                parametros.put("horafin",formatOri.format(now));
                 parametros.put("usuario","11");
                 return parametros;
             }

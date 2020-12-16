@@ -22,7 +22,6 @@ public class ReproductorPresenterCompl implements IReproductorPresenter{
 
     public ReproductorPresenterCompl(IReproductorView iReproductorView){
         this.iReproductorView=iReproductorView;
-
     }
     public List<MusicaModel> obtenerArchivosmp3(View v){
         List<MusicaModel> musicList=new ArrayList<>();
@@ -30,7 +29,7 @@ public class ReproductorPresenterCompl implements IReproductorPresenter{
         String[] projection = {MediaStore.Audio.AudioColumns.DATA, MediaStore.Audio.AudioColumns.TITLE, MediaStore.Audio.AudioColumns.DURATION, MediaStore.Audio.ArtistColumns.ARTIST,};
         Cursor c = v.getContext().getContentResolver().query(uri, projection, null, null, null);
         //Cursor c = v.getContext().getContentResolver().query(uri, projection, MediaStore.Audio.Media.DATA + " like ? ", new String[]{"%Samsung/Music%"}, null);
-            if (c != null) {
+        if (c != null) {
             while (c.moveToNext()) {
                 MusicaModel musicaModel = new MusicaModel();
                 String path = c.getString(0);
@@ -54,9 +53,7 @@ public class ReproductorPresenterCompl implements IReproductorPresenter{
                 musicList.add(musicaModel);
             }
             c.close();
-
         }
-
         return musicList;
     }
 }
