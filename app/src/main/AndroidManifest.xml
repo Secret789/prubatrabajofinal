@@ -41,6 +41,7 @@
         <activity android:name=".View.Autenticacion.Ingresar" />
         <activity android:name=".View.Historial.Historial" />
         <activity android:name=".View.Reproductor.Reproductor" />
+        <activity android:name=".View.Autenticacion.Contacto" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
