@@ -21,7 +21,7 @@ import com.example.prubatrabajofinal.View.Usuario.Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    Button btn_start;
+    Button btn_start,btn_stop;
     Chronometer chronometro;
     Boolean correr=false;
     long detenerse;
@@ -49,14 +49,29 @@ public class MainActivity extends AppCompatActivity {
 
         btn_start=findViewById(R.id.btn_start);
         chronometro=findViewById(R.id.chronometro);
-
+        btn_stop=findViewById(R.id.btn_stop);
         btn_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startChronometro();
             }
         });
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopChronometro();
+            }
+        });
 
+    }
+
+
+    private void stopChronometro() {
+        if (correr){
+            chronometro.stop();
+            detenerse = SystemClock.elapsedRealtime() - chronometro.getBase();
+            correr=false;
+        }
     }
 
     private void startChronometro() {
